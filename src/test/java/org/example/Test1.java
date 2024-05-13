@@ -1,22 +1,22 @@
 package org.example;
-import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.v85.network.Network;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
-
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Test1 extends TestConfig {
 
@@ -41,18 +41,19 @@ public class Test1 extends TestConfig {
 
     @Test(dataProvider = "getData")
     public void func1(String product, String brand, String size) throws InterruptedException {
-        MainPage.searchBar.sendKeys(product + brand + Keys.ENTER);
+        MainPage.searchBar.sendKeys(product + " " + brand + Keys.ENTER);
         Thread.sleep(1000);
         MainPage.loadWait(MainPage.sizeDropDown);
         js.executeScript("arguments[0].scrollIntoView(true);",MainPage.sizeDropDown);
         MainPage.sizeDropDown.click();
         MainPage.sizeDropDown.findElement(By.xpath("//button[text()="+ size +"]")).click();
+
     }
 
     @DataProvider
-    public Object[][]getData()
-    {
-        return new Object[][]{{"pantofi ", "adidas", "36"},{"pantofi ", "nike", "36"}};
+    public String[][]getData() throws IOException {
+
+        return Util.getfileData();
     }
 
     @Test
@@ -61,8 +62,6 @@ public class Test1 extends TestConfig {
         ChromeDriver driver = new ChromeDriver();
         DevTools devTools = driver.getDevTools();
         devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
-
-
 
     }
 }

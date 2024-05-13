@@ -56,7 +56,8 @@ public class TestConfig {
     @BeforeMethod
     public MainPage init()
     {
-        driver = getDriver();
+        //driver = getDriver();
+        driver = new ChromeDriver();driver.manage().window().maximize();
         js = (JavascriptExecutor)driver;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://www.aboutyou.ro/c/barbati/pantofi-20215");

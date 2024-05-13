@@ -21,6 +21,7 @@ public class SeleniumGrid {
         System.out.println(driver.getTitle());
 
         driver.close();
+
     }
     @Test
     public void testCheck2() throws MalformedURLException {
@@ -34,5 +35,6 @@ public class SeleniumGrid {
 
         driver.close();
     }
+
 
 }
