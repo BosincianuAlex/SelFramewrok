@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -18,7 +19,7 @@ public class MainPage extends Util {
          PageFactory.initElements(driver, this);
      }
      @FindBy(css="li[class='sc-oelsaz-0 YkKBp']")
-     List<WebElement> productList, favoriteList;
+     List<WebElement> productCatalogue, favoriteList;
      @FindBy(css="input[data-testid='searchBarInput']")
      WebElement searchBar;
      @FindBy(xpath = "//div[@class='sc-oal5i0-0 eSnLEj'][@data-testid='filterDropdownSizeGrouped']")
@@ -34,7 +35,7 @@ public class MainPage extends Util {
     }
     public List<String> getProductNames()
     {
-        return productList.stream().limit(4).map(i->i.findElement(productTitle).getText()).collect(Collectors.toList());
+        return productCatalogue.stream().limit(4).map(i->i.findElement(productTitle).getText()).collect(Collectors.toList());
     }
 
 }

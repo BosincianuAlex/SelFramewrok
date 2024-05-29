@@ -6,13 +6,22 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.bidi.network.UrlPattern;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v125.fetch.Fetch;
+import org.openqa.selenium.devtools.v125.fetch.model.RequestPattern;
+import org.openqa.selenium.devtools.v125.network.model.ErrorReason;
+import org.openqa.selenium.devtools.v125.network.model.ResourceType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 
 public class Util {
@@ -25,18 +34,6 @@ public class Util {
     {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
-    }
-    public void loadWait( WebElement findBy)
-    {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        //wait.until(ExpectedConditions.presenceOfElementLocated(findBy));
-    }
-
-    public static void getDoc() throws IOException {
-        FileInputStream file = new FileInputStream("file.xlsx");
-        XSSFWorkbook doc = new XSSFWorkbook(file);
-        //String a, b, c = doc.getSheetAt(0).getRow(1).cellIterator();
-        System.out.println(doc.getNumberOfSheets());
     }
 
     public static String[][] getfileData() throws IOException {
@@ -56,5 +53,24 @@ public class Util {
             }
         }
         return data;
+    }
+
+    public static void blockNetwork(WebDriver webdriver){
+
+        ChromeDriver driver = (ChromeDriver) webdriver;
+        DevTools devTools = driver.getDevTools();
+        devTools.createSession();
+
+        Optional<List<RequestPattern>> pattern = Optional.of(Arrays.asList(
+                new RequestPattern(Optional.of("*assets*"),
+                        Optional.of(ResourceType.valueOf("SCRIPT")),Optional.empty())));
+
+        devTools.send(Fetch.enable(pattern,Optional.empty()));
+
+        devTools.addListener(Fetch.requestPaused(), request ->{
+            System.out.println(request.getRequest().getUrl());
+            devTools.send(Fetch.failRequest(request.getRequestId(), ErrorReason.FAILED));
+        });
+
     }
 }
