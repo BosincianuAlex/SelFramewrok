@@ -4,18 +4,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 
-import org.openqa.selenium.devtools.v125.fetch.Fetch;
-import org.openqa.selenium.devtools.v125.fetch.model.RequestPattern;
 import org.openqa.selenium.devtools.v125.network.Network;
-import org.openqa.selenium.devtools.v125.network.model.ErrorReason;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.*;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 public class TestConfig {
@@ -73,8 +68,6 @@ public class TestConfig {
 
     }
 
-
-
     @BeforeMethod
     public void init()  {
 
@@ -90,7 +83,6 @@ public class TestConfig {
         driver.get("https://www.aboutyou.ro/c/barbati/pantofi-20215");
 
         MainPage = new MainPage(driver);
-
 
     }
 

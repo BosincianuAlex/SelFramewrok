@@ -7,25 +7,23 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static org.example.MainPage.*;
 
 public class TestSuite extends TestConfig {
 
     @Test
     public void addToWishlistTest(){
 
-        List<String> productNames = MainPage.getProductNames();
+        List<String> productNames = MainPage.getProductNames(productCatalogue);
 
-        js.executeScript("arguments[0].scrollIntoView(true);",MainPage.sizeDropDown);
-        MainPage.productCatalogue.stream().limit(4).forEach
+        productCatalogue.stream().limit(4).forEach
                 (i -> i.findElement(By.cssSelector("button[data-testid='addToWishlist']")).click());
 
         MainPage.clickFavoritelist();
-        MainPage.favoriteItemWaitLoad();
+        MainPage.loadWait(favoriteItems);
 
-         List<String> favoriteProductNames = MainPage.favoriteList.stream().limit(4).map
-                (i -> i.findElement(By.cssSelector("p[data-testid='brandName']")).getText()).collect(Collectors.toList());
-
+        List<String> favoriteProductNames = MainPage.getProductNames(favoriteList);
         boolean match =productNames.containsAll(favoriteProductNames);
 
         Assert.assertTrue(match);
