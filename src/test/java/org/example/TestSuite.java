@@ -49,7 +49,7 @@ public class TestSuite extends TestConfig {
 
     }
 
-    @Test //Test blocks network request to check for website response
+    @Test //Test blocks network requests to check if the website will display a message informing the user that an error has occured
     public void errorTest()
     {
         Util.blockNetwork(driver);
@@ -61,7 +61,7 @@ public class TestSuite extends TestConfig {
                     .getText(), "Ups, a apărut o mică eroare!");
         }catch (NoSuchElementException e)
         {
-            Assert.fail("you are here");
+            Assert.fail("No error message displayed");
         }
     }
 
