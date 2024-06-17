@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Loads the web elements of the page to be used in the tests cases
 public class MainPage extends Util {
     WebDriver driver;
      public MainPage(WebDriver driver){
