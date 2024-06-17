@@ -49,7 +49,7 @@ public class TestSuite extends TestConfig {
 
     }
 
-    @Test //Test blocks network to check for website response
+    @Test //Test blocks network request to check for website response
     public void errorTest()
     {
         Util.blockNetwork(driver);
