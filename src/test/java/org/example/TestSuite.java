@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.example.MainPage.*;
 
+//Class containing all the testcases
 public class TestSuite extends TestConfig {
 
     @Test
