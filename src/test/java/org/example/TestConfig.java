@@ -19,7 +19,8 @@ public class TestConfig {
     JavascriptExecutor js;
 
     public WebDriver getDriver(){
-
+    //Configures the webdriver before testcase execution
+        
         if (System.getProperty("browser").contains("firefox"))
         {
             if (System.getProperty("browser").contains("headless")) {
